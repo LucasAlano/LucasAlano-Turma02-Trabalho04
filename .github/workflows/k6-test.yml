@@ -16,10 +16,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Setup K6
-      uses: grafana/setup-k6@v3
-      with:
-        version: v0.45.0 # Use a versão desejada do K6
+    - name: Install K6
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y wget
+        wget https://github.com/grafana/k6/releases/download/v0.45.0/k6-v0.45.0-linux-amd64.tar.gz
+        tar -xvzf k6-v0.45.0-linux-amd64.tar.gz
+        sudo mv k6-v0.45.0-linux-amd64/k6 /usr/local/bin/k6
 
     - name: Run K6 Tests
       run: |
