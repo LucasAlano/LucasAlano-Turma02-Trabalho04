@@ -1,0 +1,26 @@
+name: Run K6 Performance Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-k6-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup K6
+      uses: grafana/setup-k6@v3
+      with:
+        version: v0.45.0 # Use a versão desejada do K6
+
+    - name: Run K6 Tests
+      run: |
+        k6 run ./src/tests/Tests.spec.js
